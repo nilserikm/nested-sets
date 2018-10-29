@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('tree-experimentation');
-    // return view('welcome');
-});
+Route::get('/', 'WelcomeController@welcome');
+//Route::get('/', function () {
+//    return view('tree-experimentation');
+//    // return view('welcome');
+//});

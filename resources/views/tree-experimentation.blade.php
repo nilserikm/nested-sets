@@ -13,7 +13,10 @@
     <body>
         <h1>Tree experiment</h1>
         <div class="content">
-            some content here ...
+            <div>
+                <h2>Traversed</h2>
+                <pre>{{ print_r(json_decode($traversed)) }}</pre>
+            </div>
         </div>
     </body>
 </html>
