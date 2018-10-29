@@ -13,7 +13,7 @@ class CreateCalculusTable extends Migration
      */
     public function up()
     {
-        Schema::create('calculus', function (Blueprint $table) {
+        Schema::create('calc_nodes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->integer('estimate');
@@ -29,6 +29,6 @@ class CreateCalculusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('calculus');
+        Schema::dropIfExists('calc_nodes');
     }
 }
