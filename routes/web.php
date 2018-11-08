@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', 'WelcomeController@welcome');
-//Route::get('/', function () {
-//    return view('tree-experimentation');
-//    // return view('welcome');
-//});
+Route::get('/', function() {
+    return view('nested-sets');
+});
+
+Route::post('/node/delete', 'WelcomeController@deleteNode');
+Route::post('/node/create', 'WelcomeController@createNode');
+Route::get('/tree/fetch', 'WelcomeController@fetchTree');
