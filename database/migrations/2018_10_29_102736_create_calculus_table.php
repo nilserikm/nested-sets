@@ -16,7 +16,6 @@ class CreateCalculusTable extends Migration
         Schema::create('calc_nodes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->integer('estimate');
             $table->nestedSet();
             $table->timestamps();
         });
