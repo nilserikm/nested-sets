@@ -4,11 +4,17 @@ export default {
     data() {
         return {
             allCount: null,
+            appendNodeId: null,
+            copyNodeId: null,
+            copyNodeParentId: null,
             countDifference: null,
             deleteNodeId: null,
             feedbackMessage: "",
             feedbackError: "",
-            appendNodeId: null,
+            loading: false,
+            randomLeafId: null,
+            randomNodeId: null,
+            randomNodeInfo: null,
             timing: null
         }
     },
@@ -100,7 +106,7 @@ export default {
                 this.appendNodeId = "";
                 this.setFeedback("No node ID specified ...", 'error');
             } else {
-                let url = '/node/create';
+                let url = '/node/append';
                 let data = { 'parentId': this.appendNodeId };
                 axios.post(url, data).then((response) => {
                     this.setData(response);
@@ -113,10 +119,13 @@ export default {
         },
 
         fetchData() {
+            this.loading = true;
             axios.get('/tree/fetch').then((response) => {
                 this.setData(response);
             }).catch((error) => {
                 this.setFeedback(error.response.data.message, 'error');
+            }).finally(() => {
+                this.loading = false;
             });
         },
 
