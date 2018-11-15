@@ -149,6 +149,13 @@ export default {
             });
         },
 
+        /**
+         * Sets the GUI data/message
+         * @param {number} response.data.allCount the number of nodes in the table
+         * @param {number} response.data.time the execution time from backend
+         * @param {string} response.data.message the feedback message from backend
+         * @returns {void}
+         */
         setData(response) {
             this.countDifference = response.data.allCount - this.allCount;
             this.allCount = response.data.allCount;
