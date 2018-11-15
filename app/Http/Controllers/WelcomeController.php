@@ -246,7 +246,7 @@ class WelcomeController extends Controller
         ], $httpCode);
     }
 
-    public function createNode(Request $request)
+    public function appendNode(Request $request)
     {
         $start = microtime(true);
         $success = false;
