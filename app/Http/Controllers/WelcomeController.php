@@ -297,6 +297,7 @@ class WelcomeController extends Controller
         return response()->json([
             'success' => $success,
             'message' => $message,
+            'tree' => CalcNode::whereDescendantOrSelf(1)->get()->toTree(),
             'allCount' => $this->getCount(),
             'time' => microtime(true) - $start
         ], $httpCode);
