@@ -17,6 +17,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('nested-sets', require('./components/nested-sets.vue'));
+Vue.component('vue-simple-spinner', require('vue-simple-spinner'));
 
 const app = new Vue({
     el: '#app'
