@@ -134,6 +134,10 @@ export default {
             }
         },
 
+        /**
+         * Fetches the initial data/tree from the backend
+         * @returns {void}
+         */
         fetchData() {
             this.loading = true;
             axios.get('/tree/fetch').then((response) => {
