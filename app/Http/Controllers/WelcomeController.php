@@ -216,6 +216,11 @@ class WelcomeController extends Controller
         return $copy;
     }
 
+    /**
+     * Deletes the given node
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteNode(Request $request)
     {
         $start = microtime(true);
@@ -235,7 +240,7 @@ class WelcomeController extends Controller
 
                 $success = true;
                 $httpCode = 200;
-                $message = "Node deleted ...";
+                $message = "Node (" . $node->id . ") deleted";
             } catch(\Exception $exception) {
                 $message = $exception->getMessage();
                 $httpCode = $exception->getCode();
