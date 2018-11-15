@@ -24,11 +24,19 @@ export default {
     },
 
     methods: {
+        /**
+         * Performs the checkTree and countErrors on the table in the backend
+         * @returns {void}
+         */
         checkTree() {
+            this.loading = true;
+
             axios.post('/tree/check', {}).then((response) => {
                 this.setData(response);
             }).catch((error) => {
                 this.setFeedback(error.response.data.message, 'error');
+            }).finally(() => {
+                this.loading = false;
             });
         },
 
