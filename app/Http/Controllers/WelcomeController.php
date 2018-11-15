@@ -172,27 +172,25 @@ class WelcomeController extends Controller
             $message = "Parent not found ...";
         } else {
             if (count($node->children) > 0) {
+                // has children, copy duplicate with subtree
                 $base = $node->replicate();
                 $base->save();
                 $base = $this->duplicateTree($base, $node->children);
                 $base->appendToNode($parent)->save();
-                $typeCopy = "tree";
             } else {
-                $clone = $this->duplicateLeaf($node);
-                $clone->appendToNode($parent)->save();
-                $typeCopy = "leaf";
+                // no children, simply duplicate the node itself
+                $base = $this->duplicateLeaf($node);
+                $base->appendToNode($parent)->save();
             }
 
-            $message = "Node (" . $node->id . ") appended to " . $parent->id;
+            $message = "Cloned (" . $base->id .") from (" . $node->id . ") and appended to " . $parent->id;
             $success = true;
             $httpCode = 200;
         }
 
         return response()->json([
-            'children' => $node->children,
             'success' => $success,
             'message' => $message,
-            'typeCopy' => $typeCopy,
             'allCount' => $this->getCount(),
             'time' => microtime(true) - $start
         ], $httpCode);
