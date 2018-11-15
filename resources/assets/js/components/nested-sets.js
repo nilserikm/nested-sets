@@ -40,22 +40,28 @@ export default {
             });
         },
 
+        /**
+         * Copy's the nodeId and appends the copy (with subtree) to the
+         * parentId node
+         * @returns {void}
+         */
         copyNode() {
             if (isNaN(parseInt(this.copyNodeId)) || isNaN(parseInt(this.copyNodeParentId))) {
                 this.copyNodeId = "";
                 this.setFeedback("No node ID specified ...", 'error');
             } else {
-                let url = '/node/copy';
+                this.loading = true;
                 let data = {
                     'nodeId': this.copyNodeId,
                     'parentId': this.copyNodeParentId
                 };
-                axios.post(url, data).then((response) => {
+
+                axios.post('/node/copy', data).then((response) => {
                     this.setData(response);
-                    this.copyNodeId = null;
-                    this.copyNodeParentId = null;
                 }).catch((error) => {
                     this.setFeedback(error.response.data.message, 'error');
+                }).finally(() => {
+                    this.loading = false;
                     this.copyNodeId = null;
                     this.copyNodeParentId = null;
                 });
