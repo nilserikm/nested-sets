@@ -94,18 +94,24 @@ export default {
             });
         },
 
+        /**
+         * Deletes the given node
+         * @returns {void}
+         */
         deleteNode() {
             if (isNaN(parseInt(this.deleteNodeId))) {
                 this.deleteNodeId = "";
                 this.setFeedback("No node ID specified ...", 'error');
             } else {
-                let url = '/node/delete';
+                this.loading = true;
                 let data = { 'nodeId': this.deleteNodeId };
-                axios.post(url, data).then((response) => {
+
+                axios.post('/node/delete', data).then((response) => {
                     this.setData(response);
-                    this.deleteNodeId = null;
                 }).catch((error) => {
                     this.setFeedback(error.response.data.message, 'error');
+                }).finally(() => {
+                    this.loading = false;
                     this.deleteNodeId = null;
                 });
             }
