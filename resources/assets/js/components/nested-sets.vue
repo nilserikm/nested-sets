@@ -191,6 +191,14 @@
         padding: 20px;
     }
 
+    .copy-node div input {
+        margin-right: 10px;
+    }
+
+    .copy-node div input:last-child {
+        margin-right: 0;
+    }
+
     .tree-section {
         display: flex;
         flex-direction: column;
