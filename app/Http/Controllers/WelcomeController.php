@@ -246,6 +246,11 @@ class WelcomeController extends Controller
         ], $httpCode);
     }
 
+    /**
+     * Appends a new, empty node to the given parent id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function appendNode(Request $request)
     {
         $start = microtime(true);
@@ -266,12 +271,13 @@ class WelcomeController extends Controller
 
             $success = true;
             $httpCode = 200;
-            $message = "Node inserted ...";
+            $message = "Node (" . $node->id . ") appended to ". $parent->id;
         }
 
         return response()->json([
             'success' => $success,
             'message' => $message,
+            'node' => $node,
             'allCount' => $this->getCount(),
             'time' => microtime(true) - $start
         ], $httpCode);

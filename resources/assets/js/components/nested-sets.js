@@ -111,19 +111,25 @@ export default {
             }
         },
 
+        /**
+         * Appends a new, empty node to the given parent id node
+         * @returns {void}
+         */
         appendNode() {
             if (isNaN(parseInt(this.appendNodeId))) {
                 this.appendNodeId = "";
                 this.setFeedback("No node ID specified ...", 'error');
             } else {
-                let url = '/node/append';
+                this.loading = true;
                 let data = { 'parentId': this.appendNodeId };
-                axios.post(url, data).then((response) => {
+
+                axios.post('/node/append', data).then((response) => {
                     this.setData(response);
-                    this.appendNodeId = null;
                 }).catch((error) => {
                     this.setFeedback(error.response.data.message, 'error');
+                }).finally(() => {
                     this.appendNodeId = null;
+                    this.loading = false;
                 });
             }
         },
