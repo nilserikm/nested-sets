@@ -78,18 +78,19 @@ export default {
             });
         },
 
+        /**
+         * Fetches a random leaf from the tree which root is id 1 in the table
+         * @returns {void}
+         */
         randomLeaf() {
-            let url = '/node/random/leaf';
-            let data = {};
-
-            axios.post(url, data).then((response) => {
+            axios.post('/node/random/leaf', {}).then((response) => {
                 this.setData(response);
-                this.randomLeafId = null;
                 this.randomNodeInfo = response.data.node;
             }).catch((error) => {
                 this.setFeedback(error.response.data.message, 'error');
-                this.randomLeafId = null;
                 this.randomNodeInfo = null;
+            }).finally(() => {
+                this.randomLeafId = null;
             });
         },
 
