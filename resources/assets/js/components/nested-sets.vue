@@ -50,29 +50,30 @@
                 </div>
             </div>
 
-            <!-- Random node -->
-            <div class="tree-section random-node">
-                <div>
-                    <button
-                        type="button"
-                        class="btn btn-primary btn-sm"
-                        @click="randomNode"
-                    >
-                        Get random node info
-                    </button>
+            <div class="random-section">
+                <div class="tree-section random-node">
+                    <div>
+                        <button
+                            type="button"
+                            class="btn btn-primary btn-sm"
+                            @click="randomNode"
+                        >
+                            Get random node info
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Random leaf -->
-            <div class="tree-section random-leaf">
-                <div>
-                    <button
-                        type="button"
-                        class="btn btn-primary btn-sm"
-                        @click="randomLeaf"
-                    >
-                        Get random leaf info
-                    </button>
+                <!-- Random leaf -->
+                <div class="tree-section random-leaf">
+                    <div>
+                        <button
+                            type="button"
+                            class="btn btn-primary btn-sm"
+                            @click="randomLeaf"
+                        >
+                            Get random leaf info
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -160,6 +161,15 @@
 </template>
 
 <style lang="scss">
+    .random-section {
+        display: flex;
+        flex-direction: row;
+
+        div:first-child {
+            margin-right: 10px;
+        }
+    }
+
     #overlay {
         position: fixed; /* Sit on top of the page content */
         display: block; /* Hidden by default */
