@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CalcNode;
+use App\Node;
 use Illuminate\Http\Request;
 use Kalnoy\Nestedset\Collection;
 
@@ -17,8 +17,8 @@ class WelcomeController extends Controller
         $countErrors = null;
 
         try {
-            $isBroken = CalcNode::where('id', 1)->isBroken();
-            $countErrors = CalcNode::where('id', 1)->countErrors();
+            $isBroken = Node::where('id', 1)->isBroken();
+            $countErrors = Node::where('id', 1)->countErrors();
 
             $success = true;
             $httpCode = 200;
@@ -40,7 +40,7 @@ class WelcomeController extends Controller
     public function getRandomNode($node = null)
     {
         if (is_null($node)) {
-            $node = \App\CalcNode::find(rand(1, \App\CalcNode::count()));
+            $node = \App\Node::find(rand(1, \App\Node::count()));
             return $this->getRandomNode($node);
         }
 
@@ -53,7 +53,7 @@ class WelcomeController extends Controller
         $success = false;
         $httpCode = 500;
 
-        $root = \App\CalcNode::find(1);
+        $root = \App\Node::find(1);
 
         if (empty($root)) {
             $message = "Root not found ...";
@@ -97,7 +97,7 @@ class WelcomeController extends Controller
         $success = false;
         $httpCode = 500;
 
-        $root = \App\CalcNode::find(1);
+        $root = \App\Node::find(1);
         $node = $this->getRandomLeaf($root);
 
         if (empty($root)) {
@@ -126,7 +126,7 @@ class WelcomeController extends Controller
         ], $httpCode);
     }
 
-    public function getPath(\App\CalcNode $node)
+    public function getPath(\App\Node $node)
     {
         $path = [];
         array_unshift($path, $node->title);
@@ -134,7 +134,7 @@ class WelcomeController extends Controller
         if (!is_null($node->parent_id)) {
             $traverse = function($base, &$array) use (&$traverse) {
                 if (!is_null($base->parent_id)) {
-                    $parent = \App\CalcNode::find($base->parent_id);
+                    $parent = \App\Node::find($base->parent_id);
                     array_unshift($array, $parent->title);
                     $traverse($parent, $array);
                 }
@@ -154,9 +154,9 @@ class WelcomeController extends Controller
         $success = false;
         $httpCode = 500;
 
-        $root = \App\CalcNode::find(1);
-        $node = \App\CalcNode::find($request->input('nodeId'));
-        $parent = \App\CalcNode::find($request->input('parentId'));
+        $root = \App\Node::find(1);
+        $node = \App\Node::find($request->input('nodeId'));
+        $parent = \App\Node::find($request->input('parentId'));
 
         if (empty($root)) {
             $message = "Root not found ...";
@@ -192,7 +192,7 @@ class WelcomeController extends Controller
         ], $httpCode);
     }
 
-    public function duplicateTree(\App\CalcNode $base, Collection $children)
+    public function duplicateTree(\App\Node $base, Collection $children)
     {
         foreach ($children as $child) {
             $copy = $child->replicate();
@@ -206,7 +206,7 @@ class WelcomeController extends Controller
         return $base;
     }
 
-    public function duplicateLeaf(\App\CalcNode $node)
+    public function duplicateLeaf(\App\Node $node)
     {
         $copy = $node->replicate();
         return $copy;
@@ -218,8 +218,8 @@ class WelcomeController extends Controller
         $success = false;
         $httpCode = 500;
 
-        $root = \App\CalcNode::find(1);
-        $node = \App\CalcNode::find($request->input('nodeId'));
+        $root = \App\Node::find(1);
+        $node = \App\Node::find($request->input('nodeId'));
 
         if (empty($root)) {
             $message = "Root not found ...";
@@ -252,15 +252,15 @@ class WelcomeController extends Controller
         $success = false;
         $httpCode = 500;
 
-        $root = \App\CalcNode::find(1);
-        $parent = \App\CalcNode::find($request->input('parentId'));
+        $root = \App\Node::find(1);
+        $parent = \App\Node::find($request->input('parentId'));
 
         if (empty($root)) {
             $message = "Root not found ...";
         } else if (empty($parent)) {
             $message = "Parent node not found ...";
         } else {
-            $node = new \App\CalcNode();
+            $node = new \App\Node();
             $node->title = "New append node ...";
             $parent->appendNode($node);
 
@@ -297,7 +297,7 @@ class WelcomeController extends Controller
         return response()->json([
             'success' => $success,
             'message' => $message,
-            'tree' => CalcNode::whereDescendantOrSelf(1)->get()->toTree(),
+            'tree' => Node::whereDescendantOrSelf(1)->get()->toTree(),
             'allCount' => $this->getCount(),
             'time' => microtime(true) - $start
         ], $httpCode);
@@ -309,16 +309,16 @@ class WelcomeController extends Controller
      */
     public function getCount()
     {
-        return \App\CalcNode::count();
+        return \App\Node::count();
     }
 
     public function welcome(Request $request)
     {
-        $roots = CalcNode::whereIsRoot()->get();
-        $nonEmptyRoots = CalcNode::hasChildren()->get();
-        $rootTwo = CalcNode::find(1);
+        $roots = Node::whereIsRoot()->get();
+        $nonEmptyRoots = Node::hasChildren()->get();
+        $rootTwo = Node::find(1);
         $rootTwoDescendants = $rootTwo->descendants;
-        $tree = CalcNode::whereDescendantOrSelf(1)->get();
+        $tree = Node::whereDescendantOrSelf(1)->get();
         $traversed = $tree->toTree();
 
         return view('tree-experimentation')->with([

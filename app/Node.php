@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 
-class CalcNode extends Model
+class Node extends Model
 {
     use NodeTrait;
 }

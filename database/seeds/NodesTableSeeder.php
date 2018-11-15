@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CalculusTableSeeder extends Seeder
+class NodesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class CalculusTableSeeder extends Seeder
         $numActivities = 25;
 
         for ($i = 0; $i < $numBuildings; $i++) {
-            $root = new \App\CalcNode();
+            $root = new \App\Node();
             $root->title = "building " . $i;
             $root->saveAsRoot();
 
@@ -40,7 +40,7 @@ class CalculusTableSeeder extends Seeder
 
             $phases =[];
             for ($m = 0; $m < $numPhases; $m++) {
-                $phase = \App\CalcNode::create([
+                $phase = \App\Node::create([
                     'title' => 'phase ' . $m,
                     'children' => $apartments
                 ]);
