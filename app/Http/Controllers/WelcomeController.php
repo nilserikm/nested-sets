@@ -261,7 +261,7 @@ class WelcomeController extends Controller
             $message = "Parent node not found ...";
         } else {
             $node = new \App\CalcNode();
-            $node->title = "new insert node ...";
+            $node->title = "New append node ...";
             $parent->appendNode($node);
 
             $success = true;
