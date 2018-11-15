@@ -170,12 +170,7 @@ export default {
          * @returns {void}
          */
         setFeedback(message, type="response") {
-            if (type.localeCompare("error") === 0) {
-                this.feedbackError = true;
-            } else {
-                this.feedbackError = false;
-            }
-
+            this.feedbackError = type.localeCompare("error") === 0;
             this.feedbackMessage = message;
         },
 
