@@ -62,18 +62,19 @@ export default {
             }
         },
 
+        /**
+         * Fetches a random node from the tree which root is id 1 in the table
+         * @returns {void}
+         */
         randomNode() {
-            let url = '/node/random/node';
-            let data = {};
-
-            axios.post(url, data).then((response) => {
+            axios.post('/node/random/node', {}).then((response) => {
                 this.setData(response);
-                this.randomNodeId = null;
                 this.randomNodeInfo = response.data.node;
             }).catch((error) => {
                 this.setFeedback(error.response.data.message, 'error');
-                this.randomNodeId = null;
                 this.randomNodeInfo = null;
+            }).finally(() => {
+                this.randomNodeId = null;
             });
         },
 
