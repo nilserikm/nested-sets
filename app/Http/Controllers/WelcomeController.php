@@ -148,6 +148,12 @@ class WelcomeController extends Controller
         return implode(" > ", $path);
     }
 
+    /**
+     * Copies the given nodeId and appends the copy (with subtree) to the
+     * parentId node
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function copyNode(Request $request)
     {
         $start = microtime(true);
