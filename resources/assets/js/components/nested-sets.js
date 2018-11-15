@@ -18,6 +18,66 @@ export default {
     },
 
     methods: {
+        checkTree() {
+            axios.post('/tree/check', {}).then((response) => {
+                this.setData(response);
+            }).catch((error) => {
+                this.setFeedback(error.response.data.message, 'error');
+            });
+        },
+
+        copyNode() {
+            if (isNaN(parseInt(this.copyNodeId)) || isNaN(parseInt(this.copyNodeParentId))) {
+                this.copyNodeId = "";
+                this.setFeedback("No node ID specified ...", 'error');
+            } else {
+                let url = '/node/copy';
+                let data = {
+                    'nodeId': this.copyNodeId,
+                    'parentId': this.copyNodeParentId
+                };
+                axios.post(url, data).then((response) => {
+                    this.setData(response);
+                    this.copyNodeId = null;
+                    this.copyNodeParentId = null;
+                }).catch((error) => {
+                    this.setFeedback(error.response.data.message, 'error');
+                    this.copyNodeId = null;
+                    this.copyNodeParentId = null;
+                });
+            }
+        },
+
+        randomNode() {
+            let url = '/node/random/node';
+            let data = {};
+
+            axios.post(url, data).then((response) => {
+                this.setData(response);
+                this.randomNodeId = null;
+                this.randomNodeInfo = response.data.node;
+            }).catch((error) => {
+                this.setFeedback(error.response.data.message, 'error');
+                this.randomNodeId = null;
+                this.randomNodeInfo = null;
+            });
+        },
+
+        randomLeaf() {
+            let url = '/node/random/leaf';
+            let data = {};
+
+            axios.post(url, data).then((response) => {
+                this.setData(response);
+                this.randomLeafId = null;
+                this.randomNodeInfo = response.data.node;
+            }).catch((error) => {
+                this.setFeedback(error.response.data.message, 'error');
+                this.randomLeafId = null;
+                this.randomNodeInfo = null;
+            });
+        },
+
         deleteNode() {
             if (isNaN(parseInt(this.deleteNodeId))) {
                 this.deleteNodeId = "";
